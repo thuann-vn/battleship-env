@@ -1,13 +1,13 @@
-#EVA Hackathon Development Environment
+# EVA Hackathon Development Environment
 
 
 ## Steps to install
 
 1. Install Docker and Docker Compose
 
-Please install Docker Engine and Docker Compose at this [document](https://docs.docker.com/compose/install/).
+    Please install Docker Engine and Docker Compose at this [document](https://docs.docker.com/compose/install/).
 
-If you aren't familiar with Docker, please read the official documents.
+    If you aren't familiar with Docker, please read the official documents.
 
 2. Clone the repository
 
@@ -40,16 +40,18 @@ If you aren't familiar with Docker, please read the official documents.
 
 
 4. Change the configuration to test your bot
-    We already configured a random bot at `bot1` and `bot2`..
-
-    So please use your bot in replacement for `bot2`, don't change the id values.
+    We already configured a random AI at `bot1` and `bot2`.
+    
+    To test your AI, just point `bot2`'s port to your running AI's port. 
+    
+    It means that your id must be `bot2` now <- P/s: we'll improve it later ;)
 
     * Edit the file `bot_urls.txt`
         Default, the value `DOCKERHOST` is already understood by gamengine to point to your local host.
         
-        So just change the port value if your bot running on another port.
+        So just change the port value if your AI running on another AI.
         
-        Example: Your bot are running on `8080` port
+        Example: Your AI are running on `8080` port
 
         ```
         bot1,http://bot1:8000
@@ -62,19 +64,23 @@ If you aren't familiar with Docker, please read the official documents.
         ```
         ./fig.sh -f local-bot.yml up -d
         ```
+        
+    > Summary: just change the port **8002** to your AI's port in `bot_urls.txt`
+     
+5. Access to `http://localhost` to try it
 
 ## Some docker/docker-compose commands
 
-    > Note that, to running our project, please run `fig.sh` instead of `docker-compose`.
+> Note that, to running our project, please run `fig.sh` instead of `docker-compose`.
 
-    ```
-    docker-compose build
-    docker-compose up
-    docker-compose up gameengine  # to run up gameengine
-    docker-compose up -d  # to run in background
-    docker-compose logs -f
-    docker-compose logs -f bot1
-    docker-compose stop
-    docker-compose start
-    docker-compose down
-    ```
+```
+docker-compose build
+docker-compose up
+docker-compose up gameengine  # to run up gameengine
+docker-compose up -d  # to run in background
+docker-compose logs -f
+docker-compose logs -f bot1
+docker-compose stop
+docker-compose start
+docker-compose down
+```
