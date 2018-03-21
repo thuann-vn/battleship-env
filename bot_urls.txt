@@ -1,2 +1,2 @@
-bot1,http://bot1:8000
-bot2,http://DOCKERHOST:8002
+bot1,http://bot1:8000,Bot1 Name
+bot2,http://DOCKERHOST:8002,Bot2 Name

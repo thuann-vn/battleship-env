@@ -15,16 +15,16 @@
             <div class="form-group">
                 <label class="control-label " for="player1">Red team:</label>
                 <select class="form-control" id="player1" name="red_team">
-                    @foreach($ais as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
+                    @foreach($ais as $key=>$item)
+                    <option value="{{ $key }}">{{ $item }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label class="control-label " for="player1">Blue team:</label>
                 <select class="form-control" id="player2" name="blue_team">
-                    @foreach($ais as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
+                    @foreach($ais as $key=>$item)
+                    <option value="{{ $key }}">{{ $item }}</option>
                     @endforeach
                 </select>
             </div>

@@ -8,6 +8,7 @@ services:
       - ./presenter:/var/www/laravel
       - ./apache/env:/var/www/laravel/.env
       - ./apache/presenter_vhost.conf:/etc/apache2/sites-available/000-default.conf
+      - ./bot_urls.txt:/var/www/laravel/public/bot_urls.txt
   redis:
     image: redis
     ports:
