@@ -1,0 +1,2 @@
+bot1,http://bot1:8000
+bot2,http://DOCKERHOST:8002
