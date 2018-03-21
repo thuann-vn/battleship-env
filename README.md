@@ -43,8 +43,6 @@
     We already configured a random AI at `bot1` and `bot2`.
     
     To test your AI, just point `bot2`'s port to your running AI's port. 
-    
-    It means that your id must be `bot2` now <- P/s: we'll improve it later ;)
 
     * Edit the file `bot_urls.txt`
         Default, the value `DOCKERHOST` is already understood by gamengine to point to your local host.
@@ -65,9 +63,9 @@
         ./fig.sh -f local-bot.yml up -d
         ```
         
-    > Summary: just change the port **8002** to your AI's port in `bot_urls.txt`
+    > Summary: change `bot2` configuration in `bot_urls.txt` to your AI (id, name)
      
-5. Access to `http://localhost` to try it
+5. Access to `http://localhost/bb` to try it
 
 ## Some docker/docker-compose commands
 
