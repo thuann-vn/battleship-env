@@ -35,13 +35,45 @@ class BBBoardInfo implements JsonSerializable
     
     private $infoRedTeam = null;
     private $infoBlueTeam = null;
+
+    private $arrRedLayout = [
+                        [0, 0, 0, 1, 2],
+                        [0, 7, 1, 1, 2],
+                        [17, 0, 2, 1, 2],
+                        [19, 7, 3, 1, 2],
+                        [2, 1, 0, 0, 2],
+                        [10, 2, 0, 1, 4],
+                        [1, 1, 1, 0, 2],
+                        [3, 3, 2, 0, 2],
+                        [15, 6, 3, 0, 2],
+                        [12, 4, 4, 0, 4],
+                        [5, 4, 5, 0, 2],
+                    ];
+    private $arrBlueLayout = [
+                        [0, 0, 4, 0, 2],
+                        [0, 6, 5, 0, 2],
+                        [19, 0, 0, 0, 2],
+                        [19, 6, 1, 0, 2],
+                        [5, 4, 0, 0, 4],
+                        [2, 2, 0, 0, 4],
+                        [3, 3, 1, 1, 2],
+                        [1, 1, 2, 1, 2],
+                        [10, 10, 3, 1, 2],
+                        [12, 4, 4, 1, 4],
+                     ];
     
     function __construct($sid, $token) {
         $this->infoRedTeam = new BBTeamInfo();
-        $this->infoRedTeam->fillData("THANH_RANDOM", $this->randBetween(0, 100), $this->randBetween(0, 100), $this->randBetween(0, 100), 
+        $this->infoRedTeam->fillData("Hoàng Sa Fleet", 
+                            $this->randBetween(0, 100), 
+                            intval($token), 
+                            $this->randBetween(0, 100), 
                             $this->randBetween(0, 100), $this->randBetween(0, 100), $this->randBetween(0, 100));
         $this->infoBlueTeam = new BBTeamInfo();
-        $this->infoBlueTeam->fillData("AI_BUA", $this->randBetween(0, 100), $this->randBetween(0, 100), $this->randBetween(0, 100), 
+        $this->infoBlueTeam->fillData("Hạm đội 7", 
+                            $this->randBetween(0, 100), 
+                            intval($token), 
+                            $this->randBetween(0, 100), 
                             $this->randBetween(0, 100), $this->randBetween(0, 100), $this->randBetween(0, 100));
 
         $sessionID = $sid;
@@ -51,11 +83,21 @@ class BBBoardInfo implements JsonSerializable
 
         $flgGameEnd = 0;
         //forced ending
-        if ($token >= 3) {
+        if (intval($token) > 19) {
             $flgGameEnd = 1;
         }
         $this->objGameRound = new BBGameRound($flgGameEnd, 0, 1, 0, 'Initializing ...', 'Wait');
         
+        //init, for the json output
+        $this->arrRedShipSinkPos = [];
+        $this->arrBlueShipSinkPos = [];
+        $this->arrRedWaterExplodePos = [];
+        $this->arrBlueWaterExplodePos = [];
+        $this->arrRedExplodePos = [];
+        $this->arrBlueExplodePos = [];
+        $this->arrRedHitPos = [];
+        $this->arrBlueHitPos = [];
+
         $iTest1Type = 0;
         $iTest2Type = 0;
         $iTest3Type = 0;
@@ -73,103 +115,157 @@ class BBBoardInfo implements JsonSerializable
         //type: 0 BB
         //dir: 0 vertical
         //x, y, type, direction, length
-        $iTest1Type = 0;
-        $iTest2Type = 1;
-        $iTest3Type = 2;
-        $iTest4Type = 3;
-        $objShip = new BBShipInfo(0, 0, $iTest1Type, 1, 2);
-        $this->arrRedShips[] = $objShip;
-        $objShip = new BBShipInfo(0, 7, $iTest2Type, 1, 2);
-        $this->arrRedShips[] = $objShip;
-        $objShip = new BBShipInfo(17, 0, $iTest3Type, 1, 2);
-        $this->arrRedShips[] = $objShip;
-        $objShip = new BBShipInfo(19, 7, $iTest4Type, 1, 2);
-        $this->arrRedShips[] = $objShip;
-
-        //type: 0 BB
-        //dir: 0 vertical
-        //x, y, type, direction, length
-        $objShip = new BBShipInfo(2, 1, 0, 0, 2);
-        $this->arrRedShips[] = $objShip;
-        $objShip = new BBShipInfo(10, 2, 0, 1, 4);
-        $this->arrRedShips[] = $objShip;
-        //dd
-        $objShip = new BBShipInfo(1, 1, 1, 0, 2);
-        $this->arrRedShips[] = $objShip;
-        //ca
-        $objShip = new BBShipInfo(3, 3, 2, 0, 2);
-        $this->arrRedShips[] = $objShip;
-        //pt
-        $objShip = new BBShipInfo(15, 6, 3, 0, 2);
-        $this->arrRedShips[] = $objShip;
-        //cv
-        $objShip = new BBShipInfo(12, 4, 4, 0, 4);
-        $this->arrRedShips[] = $objShip;
-        //or
-        $objShip = new BBShipInfo(5, 4, 5, 0, 2);
-        $this->arrRedShips[] = $objShip;
-
-
-        $iTest1Type = 4;
-        $iTest2Type = 5;
-        $iTest3Type = 0;
-        $iTest4Type = 1;
-        $objShip = new BBShipInfo(0, 0, $iTest1Type, 0, 2);
-        $this->arrBlueShips[] = $objShip;
-        $objShip = new BBShipInfo(0, 6, $iTest2Type, 0, 2);
-        $this->arrBlueShips[] = $objShip;
-        $objShip = new BBShipInfo(19, 0, $iTest3Type, 0, 2);
-        $this->arrBlueShips[] = $objShip;
-        $objShip = new BBShipInfo(19, 6, $iTest4Type, 0, 2);
-        $this->arrBlueShips[] = $objShip;
-
-        //blue ships
-        $objShip = new BBShipInfo(5, 4, 0, 0, 4);
-        $this->arrBlueShips[] = $objShip;
-        $objShip = new BBShipInfo(2, 2, 0, 0, 4);
-        $this->arrBlueShips[] = $objShip;
-        //dd
-        $objShip = new BBShipInfo(3, 3, 1, 1, 2);
-        $this->arrBlueShips[] = $objShip;
-        //ca
-        $objShip = new BBShipInfo(1, 1, 2, 1, 2);
-        $this->arrBlueShips[] = $objShip;
-        //pt
-        $objShip = new BBShipInfo(10, 10, 3, 1, 2);
-        $this->arrBlueShips[] = $objShip;
-        //cv
-        $objShip = new BBShipInfo(12, 4, 4, 1, 4);
-        $this->arrBlueShips[] = $objShip;
-        
-        for ($i = 0; $i < $token; $i++) {
-            $yPos = (int)floor($i / 20);
-            $xPos = ($i - ($yPos * 20));
-            $objPos = new BBPosInfo($xPos, $yPos);
-            $this->arrRedHitPos[] = $objPos;
-        }
-        
-        for ($i = 0; $i < $token; $i++) {
-            $yPos = (int)floor($i / 20);
-            $xPos = ($i - ($yPos * 20));
-            $objPos = new BBPosInfo($xPos, $yPos);
-            $this->arrBlueHitPos[] = $objPos;
+        foreach ($this->arrRedLayout as $layout) {
+            $objShip = new BBShipInfo($layout[0], $layout[1], $layout[2], $layout[3], $layout[4]);
+            $this->arrRedShips[] = $objShip;
         }
 
-        $objPos = new BBPosInfo($this->randBetween(0, 19), $this->randBetween(0, 8));
-        $this->arrRedExplodePos[] = $objPos;
-        $objPos = new BBPosInfo($this->randBetween(0, 19), $this->randBetween(0, 8));
-        $this->arrBlueExplodePos[] = $objPos;
+        foreach ($this->arrBlueLayout as $layout) {
+            $objShip = new BBShipInfo($layout[0], $layout[1], $layout[2], $layout[3], $layout[4]);
+            $this->arrBlueShips[] = $objShip;
+        }
         
-        $objPos = new BBPosInfo($this->randBetween(0, 19), $this->randBetween(0, 8));
-        $this->arrRedWaterExplodePos[] = $objPos;
-        $objPos = new BBPosInfo($this->randBetween(0, 19), $this->randBetween(0, 8));
-        $this->arrBlueWaterExplodePos[] = $objPos;
+        $this->createRedHitPos(intval($token));
+        $this->createBlueHitPos(intval($token));
+        
+        $this->createRedExplodePos(intval($token));
+        $this->createBlueExplodePos(intval($token));
+        
+        $this->createRedWaterExplodePos(intval($token));
+        $this->createBlueWaterExplodePos(intval($token));
 
+        $this->createRedShipSinkPos(intval($token));
+        $this->createBlueShipSinkPos(intval($token));
+
+    }
+
+    function isSomethingHit($arrData, $x, $y) {
+        foreach ($arrData as $layout) {
+            if ($layout[0] == $x && $layout[1] == $y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function isRedHit($x, $y) {
+        return $this->isSomethingHit($this->arrRedLayout, $x, $y);
+    }
+
+    function isBlueHit($x, $y) {
+        return $this->isSomethingHit($this->arrBlueLayout, $x, $y);
+    }
+
+    function createRedShipSinkPos($step) {
         $objPos = new BBPosInfo(0, 0);
         $this->arrRedShipSinkPos[] = $objPos;
-        $objPos = new BBPosInfo(0, 6);
-        $this->arrBlueShipSinkPos[] = $objPos;
 
+    }
+
+    function createBlueShipSinkPos($step) {
+        $objPos = new BBPosInfo(0, 0);
+        $this->arrBlueShipSinkPos[] = $objPos;
+    }
+
+    function createRedWaterExplodePos($step) {
+        if ($step > 19) {
+            $step = 19;
+        }
+        if ($step == 3) {
+            //combo shot
+            $objPos = new BBPosInfo(3, $this->randBetween(0,7));
+            $this->arrRedWaterExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(5, $this->randBetween(0,7));
+            $this->arrRedWaterExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(7, $this->randBetween(0,7));
+            $this->arrRedWaterExplodePos[] = $objPos;
+
+        }
+        else {
+            $objPos = new BBPosInfo($step, $this->randBetween(0,7));
+            $this->arrRedWaterExplodePos[] = $objPos;
+        }
+
+    }
+
+    function createBlueWaterExplodePos($step) {
+        if ($step > 19) {
+            $step = 19;
+        }
+        if ($step == 3) {
+            //combo shot
+            $objPos = new BBPosInfo(3, $this->randBetween(0,7));
+            $this->arrBlueWaterExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(5, $this->randBetween(0,7));
+            $this->arrBlueWaterExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(7, $this->randBetween(0,7));
+            $this->arrBlueWaterExplodePos[] = $objPos;
+
+        }
+        else {
+            $objPos = new BBPosInfo($step, $this->randBetween(0,7));
+            $this->arrBlueWaterExplodePos[] = $objPos;
+        }
+    }
+
+    function createRedExplodePos($step) {
+
+        if ($step > 19) {
+            $step = 19;
+        }
+        if ($step ==3) {
+            $objPos = new BBPosInfo(4, $this->randBetween(0,7));
+            $this->arrRedExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(6, $this->randBetween(0,7));
+            $this->arrRedExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(8, $this->randBetween(0,7));
+            $this->arrRedExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(9, $this->randBetween(0,7));
+            $this->arrRedExplodePos[] = $objPos;
+        }
+        else {
+            $objPos = new BBPosInfo($step, $this->randBetween(0,7));
+            $this->arrRedExplodePos[] = $objPos;
+        }
+
+    }
+
+    function createBlueExplodePos($step) {
+
+        if ($step > 19) {
+            $step = 19;
+        }
+        if ($step == 3) {
+            $objPos = new BBPosInfo(4, $this->randBetween(0,7));
+            $this->arrBlueExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(6, $this->randBetween(0,7));
+            $this->arrBlueExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(8, $this->randBetween(0,7));
+            $this->arrBlueExplodePos[] = $objPos;
+            $objPos = new BBPosInfo(9, $this->randBetween(0,7));
+            $this->arrBlueExplodePos[] = $objPos;
+        }
+        else {
+            $objPos = new BBPosInfo($step, $this->randBetween(0,7));
+            $this->arrBlueExplodePos[] = $objPos;
+        }
+
+    }
+
+    function createRedHitPos($step) {
+        if ($step > 19) {
+            $step = 19;
+        }
+        $objPos = new BBPosInfo($this->randBetween(0, 19), $step);
+        $this->arrRedHitPos[] = $objPos;
+    }
+
+    function createBlueHitPos($step) {
+        if ($step > 19) {
+            $step = 19;
+        }
+        $objPos = new BBPosInfo($this->randBetween(0, 19), $step);
+        $this->arrBlueHitPos[] = $objPos;
     }
     
     function randBetween($iFrom, $iTo) {

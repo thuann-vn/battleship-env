@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>DeNA Travel hackathon duel platform</title>
+    <title>DeNA Travel lab - Hackathon duel platform</title>
     <link rel="shortcut icon" href="cube.ico" />
     <link rel="icon" type="image/png" href="cube.png" />
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -10,21 +10,21 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to DeNA Hackathon platform (<a href="/about">about</a>)</h1>
+        <h1>DeNA Travel lab - Hackathon platform (<a href="/about">about</a>)</h1>
          <form action="/game_start">
             <div class="form-group">
                 <label class="control-label " for="player1">Red team:</label>
                 <select class="form-control" id="player1" name="red_team">
-                    @foreach($ais as $key=>$item)
-                    <option value="{{ $key }}">{{ $item }}</option>
+                    @foreach($ais as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <label class="control-label " for="player1">Blue team:</label>
                 <select class="form-control" id="player2" name="blue_team">
-                    @foreach($ais as $key=>$item)
-                    <option value="{{ $key }}">{{ $item }}</option>
+                    @foreach($ais as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach
                 </select>
             </div>

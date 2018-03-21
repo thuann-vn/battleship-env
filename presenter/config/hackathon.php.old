@@ -8,20 +8,16 @@ return [
         'version' => '1.0'
     ],
     'game_session' => [
-        'id' => 'dinhnv_phuongnv',
+        'id' => 'quangnd_vp',
         'admin' => 'tientn@evolableasia.vn'
     ],
     'game_logic' => [
         'presenter' => [
-            'ais' => [
-                '4' => 'raijin',
-                '5' => 'baby',
-            ],
             'init' => [
-                'url' => 'http://gameengine:5000/init'
+                'url' => 'http://10.10.20.179:5000/init'
             ],
             'round' => [
-                'url' => 'http://gameengine:5000/round'
+                'url' => 'http://10.10.20.179:5000/round'
             ]
         ]
     ]

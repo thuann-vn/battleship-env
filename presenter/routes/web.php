@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'BBGameIndex@index');
+Route::get('/bb', 'BBGameIndex@index');
 Route::get('/game_start', 'BBGamePresenter@index');
 Route::get('/about', function () {
     return view('about');

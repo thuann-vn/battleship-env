@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>DeNA Travel hackathon duel platform</title>
+    <title>DeNA Travel lab - Hackathon platform</title>
     <link rel="shortcut icon" href="cube.ico" />
     <link rel="icon" type="image/png" href="cube.png" />
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
@@ -19,13 +19,7 @@
             var flgHWAcceleration = {{$hw_acceleration}};
         </script>
 
-        @if ($debug_code == 1)
-            <script src="/js/phaser_2.6.2_tientnfix.min.js"></script>
-            <script src="/js/phaser-plugin-isometric.min.js"></script>
-            <script src="js/dena_battleship.js"></script>
-        @else
             <script src="js/all.js"></script>
-        @endif
 
     </div>
 </body>
